@@ -3,7 +3,7 @@ from telebot import types
 import random
 import time
 
-API_TOKEN = '251848669:AAHwOgT4o65YxHrwoRUw_ojzTe4nN81KLoU'
+API_TOKEN = '293392235:AAEqvnM1OFso8ddProbcAjnDzjrx_w6DvP0'
 
 techniques = {'6': {'УКЕМИ': ['МАЕ УКЕМИ', 'УШИРО УКЕМИ'],
                     'СИККО': ['МАЕ СИКО', 'УШИРО СИКО'],
@@ -256,16 +256,17 @@ def process_step(message):
     global timelapse
     timelapse = int(message.text)
     chat_id = message.chat.id
+    markup = types.ReplyKeyboardHide(selective=False)
+    bot.send_message(chat_id, 'Аттестационная программа на ' + kyu + ' кю', reply_markup=markup)
     for group in techniques[kyu].keys():
         bot.send_message(chat_id, '*' + group + '*',  parse_mode='Markdown')
-        time.sleep(timelapse)
+        time.sleep(1)
         rez_line = techniques[kyu].get(group)
         random.shuffle(rez_line)
         for tech in rez_line:
             bot.send_message(chat_id, '.       ' + tech)
             time.sleep(timelapse)
     bot.send_message(chat_id, '*---=== FINISH ===---*', parse_mode='Markdown')
-
 bot.polling()
 
 '''
